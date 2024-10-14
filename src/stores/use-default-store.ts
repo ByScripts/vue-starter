@@ -9,11 +9,17 @@ export const useDefaultStore = defineStore('default', () => {
         garniture: ['Chicken', 'Beef', 'Salad']
     })
 
-    function addIngredients (type: 'bread' | 'sauce' | 'cheese' | 'garniture', name: string) {
-        ingredients.value[type] = [
-           ...ingredients.value[type],
+    function addIngredients (category: 'bread' | 'sauce' | 'cheese' | 'garniture', name: string) {
+        ingredients.value[category] = [
+           ...ingredients.value[category],
            name
         ];
+        localStorage.setItem("ingredients", JSON.stringify(ingredients.value))
+    }
+
+    function removeIngredient (category: 'bread' | 'sauce' | 'cheese' | 'garniture', name: string) {
+        const index = ingredients.value[category].indexOf(name)
+        ingredients.value[category].splice(index, 1)
     }
 
     const sandwiches = ref([
@@ -26,12 +32,19 @@ export const useDefaultStore = defineStore('default', () => {
             ...sandwiches.value,
             sandwich
         ]
+        localStorage.setItem("sandwiches", JSON.stringify(sandwiches.value))
+    }
+
+    function removeSandwich (index) {
+        sandwiches.value.splice(index, 1)
     }
 
     return {
         ingredients,
         addIngredients,
+        removeIngredient,
         sandwiches,
         addSandwich,
+        removeSandwich,
     }
 })

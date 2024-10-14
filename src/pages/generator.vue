@@ -9,6 +9,7 @@ const sandwich = ref([])
 function generateSandwich() {
   sandwich.value = []
   for (const category in defaultStore.ingredients) {
+    console.log(category, defaultStore.ingredients[category])
     const numberOfIngredients = defaultStore.ingredients[category].length
     const ingredientIndex = Math.floor(Math.random() * numberOfIngredients)
     sandwich.value.push(defaultStore.ingredients[category][ingredientIndex])
@@ -16,7 +17,7 @@ function generateSandwich() {
 }
 
 function saveSandwich() {
-  defaultStore.addSandwich(sandwich.value)
+  defaultStore.addSandwich([...sandwich.value])
   sandwich.value = []
 }
 
